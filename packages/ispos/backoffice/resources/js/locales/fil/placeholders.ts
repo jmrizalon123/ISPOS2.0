@@ -1,0 +1,18 @@
+export default {
+    codeBev: 'hal. BEV',
+    codePlan: 'hal. RETAIL',
+    codeMain: 'hal. MAIN',
+    codeDemo: 'hal. DEMO',
+    codePc: 'hal. PC',
+    symbolPc: 'hal. pc',
+    codeVat: 'hal. VAT12',
+    email: "you{'@'}company.com",
+    password: '••••••••',
+    searchCategories: 'Maghanap ng kategorya…',
+    searchProducts: 'Maghanap ng produkto…',
+    searchGeneric: 'Maghanap…',
+    adjustmentReason: 'Stock count, damage, correction…',
+    additionalDetails: 'Karagdagang detalye',
+    locationNotes: 'Mga tala tungkol sa lokasyong ito.',
+    leaveBlankKeep: 'Iwanang blangko para panatilihin ang kasalukuyan',
+};

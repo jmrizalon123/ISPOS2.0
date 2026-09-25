@@ -1,0 +1,25 @@
+{
+    "name": "ispos/backoffice",
+    "description": "iSPOS Back Office — admin UI, auth, reports, and catalog management",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "inertiajs/inertia-laravel": "^2.0",
+        "laravel/framework": "^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ispos\\Backoffice\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ispos\\Backoffice\\BackofficeServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

@@ -1,0 +1,18 @@
+export default {
+    details: 'Mga Detalye',
+    reference: 'Sanggunian',
+    items: 'Mga Item',
+    cashDrawer: 'Cash drawer',
+    paymentsByMethod: 'Mga bayad ayon sa paraan',
+    shiftSales: 'Mga benta ng shift',
+    totalDebits: 'Kabuuang debits',
+    totalCredits: 'Kabuuang credits',
+    revenue: 'Kita',
+    expenses: 'Gastos',
+    netIncome: 'Netong kita',
+    totalAssets: 'Kabuuang assets',
+    liabilitiesEquity: 'Liabilities + equity',
+    chooseSourceLocation: 'Pumili ng source location',
+    noProductsAdded: 'Walang produktong naidagdag pa',
+    lineItems: 'Mga line item',
+};
