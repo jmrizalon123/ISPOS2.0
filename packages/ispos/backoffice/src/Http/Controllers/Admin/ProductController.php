@@ -42,23 +42,19 @@ class ProductController extends Controller
                 [
                     'category_id' => $request->string('category_id')->toString() ?: null,
                     'brand_id' => $request->string('brand_id')->toString() ?: null,
-                    'status' => $ctx['status'],
                     'store_id' => $ctx['storeId'],
-                    'sales_plan_id' => $request->string('sales_plan_id')->toString() ?: null,
-                    'stock_status' => $request->string('stock_status')->toString() ?: null,
                 ],
             ),
             'companies' => $this->companyOptions($request),
             'stores' => $this->storeOptions($request),
             'categories' => $this->catalogFilterOptions(Category::class, 'category_code', $ctx['companyId']),
             'brands' => $this->catalogFilterOptions(Brand::class, 'brand_code', $ctx['companyId']),
-            'salesPlans' => $this->salesPlanOptions($ctx['companyId']),
             'filters' => [
-                ...$ctx['filters'],
+                'search' => $request->string('search')->toString(),
+                'company_id' => $request->string('company_id')->toString(),
+                'store_id' => $ctx['storeId'] ?? '',
                 'category_id' => $request->string('category_id')->toString(),
                 'brand_id' => $request->string('brand_id')->toString(),
-                'sales_plan_id' => $request->string('sales_plan_id')->toString(),
-                'stock_status' => $request->string('stock_status')->toString(),
             ],
         ]);
     }

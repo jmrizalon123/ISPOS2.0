@@ -11,7 +11,6 @@ import IndexPageHeader from '@/Components/ui/IndexPageHeader.vue';
 import IndexToolbar from '@/Components/ui/IndexToolbar.vue';
 import Input from '@/Components/ui/Input.vue';
 import Select from '@/Components/ui/Select.vue';
-import StatusFilterSelect from '@/Components/ui/StatusFilterSelect.vue';
 import TableAuditStamp from '@/Components/ui/TableAuditStamp.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useCatalogIndexFilters } from '@/Composables/useCatalogIndexFilters';
@@ -47,16 +46,12 @@ const props = defineProps<{
     stores: Array<{ id: string; store_name: string; store_code: string; company_id: string }>;
     categories: Array<{ id: string; name: string; category_code: string; company_id: string }>;
     brands: Array<{ id: string; name: string; brand_code: string; company_id: string }>;
-    salesPlans: Array<{ id: string; name: string; plan_code: string; company_id: string }>;
     filters: {
         search: string;
         company_id: string;
         store_id: string;
         category_id: string;
         brand_id: string;
-        sales_plan_id: string;
-        status: string;
-        stock_status: string;
     };
 }>();
 
@@ -66,19 +61,16 @@ const {
     storeId,
     categoryId,
     brandId,
-    salesPlanId,
-    status,
     showCompanyFilter,
     showStoreFilter,
     filteredStores,
     hasActiveFilters,
     clearFilters,
     filterQuery,
-    stockStatus: stockStatusFilter,
 } = useCatalogIndexFilters(
     'admin.products.index',
     props.filters,
-    ['search', 'company_id', 'store_id', 'category_id', 'brand_id', 'sales_plan_id', 'status', 'stock_status'],
+    ['search', 'company_id', 'store_id', 'category_id', 'brand_id'],
     props.companies,
     props.stores,
 );
@@ -89,10 +81,6 @@ const filteredCategories = computed(() =>
 
 const filteredBrands = computed(() =>
     props.brands.filter((brand) => !companyId.value || brand.company_id === companyId.value),
-);
-
-const filteredSalesPlans = computed(() =>
-    props.salesPlans.filter((plan) => !companyId.value || plan.company_id === companyId.value),
 );
 
 const columns = computed(() => [
@@ -172,45 +160,32 @@ function productImageUrl(product: ProductRecord): string | null {
             </IndexPageHeader>
 
             <IndexToolbar class="shrink-0" :show-clear="hasActiveFilters" @clear="clearFilters">
-            <Input v-model="search" :placeholder="page.searchPlaceholder" class="!w-56" />
-            <Select v-if="showCompanyFilter" v-model="companyId" class="!w-44">
-                <option value="">{{ t('common.allCompanies') }}</option>
-                <option v-for="company in companies" :key="company.id" :value="company.id">
-                    {{ company.display_name || company.name }}
-                </option>
-            </Select>
-            <Select v-if="showStoreFilter" v-model="storeId" class="!w-44">
-                <option value="">{{ t('common.allStores') }}</option>
-                <option v-for="store in filteredStores" :key="store.id" :value="store.id">
-                    {{ store.store_name }}
-                </option>
-            </Select>
-            <Select v-model="salesPlanId" class="!w-44">
-                <option value="">{{ filter('allSalesPlans') }}</option>
-                <option v-for="plan in filteredSalesPlans" :key="plan.id" :value="plan.id">
-                    {{ plan.name }}
-                </option>
-            </Select>
-            <Select v-model="categoryId" class="!w-44">
-                <option value="">{{ filter('allCategories') }}</option>
-                <option v-for="category in filteredCategories" :key="category.id" :value="category.id">
-                    {{ category.name }}
-                </option>
-            </Select>
-            <Select v-model="brandId" class="!w-40">
-                <option value="">{{ filter('allBrands') }}</option>
-                <option v-for="brand in filteredBrands" :key="brand.id" :value="brand.id">
-                    {{ brand.name }}
-                </option>
-            </Select>
-            <StatusFilterSelect v-model="status" />
-            <Select v-model="stockStatusFilter" class="!w-40">
-                <option value="">{{ filter('allStock') }}</option>
-                <option value="low">{{ filter('lowStock') }}</option>
-                <option value="out">{{ filter('outOfStock') }}</option>
-                <option value="ok">{{ filter('inStock') }}</option>
-            </Select>
-        </IndexToolbar>
+                <Input v-model="search" :placeholder="page.searchPlaceholder" class="!w-full sm:!w-64 xl:!w-72" />
+                <Select v-if="showCompanyFilter" v-model="companyId" class="!w-full sm:!w-44 xl:!w-48">
+                    <option value="">{{ t('common.allCompanies') }}</option>
+                    <option v-for="company in companies" :key="company.id" :value="company.id">
+                        {{ company.display_name || company.name }}
+                    </option>
+                </Select>
+                <Select v-if="showStoreFilter" v-model="storeId" class="!w-full sm:!w-44 xl:!w-48">
+                    <option value="">{{ t('common.allStores') }}</option>
+                    <option v-for="store in filteredStores" :key="store.id" :value="store.id">
+                        {{ store.store_name }}
+                    </option>
+                </Select>
+                <Select v-model="categoryId" class="!w-full sm:!w-44 xl:!w-48">
+                    <option value="">{{ filter('allCategories') }}</option>
+                    <option v-for="category in filteredCategories" :key="category.id" :value="category.id">
+                        {{ category.name }}
+                    </option>
+                </Select>
+                <Select v-model="brandId" class="!w-full sm:!w-44 xl:!w-48">
+                    <option value="">{{ filter('allBrands') }}</option>
+                    <option v-for="brand in filteredBrands" :key="brand.id" :value="brand.id">
+                        {{ brand.name }}
+                    </option>
+                </Select>
+            </IndexToolbar>
 
         <EmptyState
             v-if="!products.data.length"
